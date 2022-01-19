@@ -23,6 +23,6 @@ $(function () {
     return false;
   });
 });
-$(".openbtn").click(function () {
-  $("#js-drawer").toggleClass('active');
+$("#js-btn").click(function () {
+  $("#js-drawer").toggleClass("active");
 });

@@ -1,4 +1,3 @@
-
 $(function () {
   // #で始まるリンクをクリックしたら実行されます
   $('a[href^="#"]').click(function () {
@@ -30,7 +29,6 @@ $(function () {
   });
 });
 
-
-$(".openbtn").click(function () {
-  $("#js-drawer").toggleClass('active');
+$("#js-btn").click(function () {
+  $("#js-drawer").toggleClass("active");
 });
