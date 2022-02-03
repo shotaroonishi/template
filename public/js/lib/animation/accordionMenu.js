@@ -1,0 +1,109 @@
+"use strict";
+
+/* =================================================== */
+// slideUp, slideDown, slideToggle関数を定義
+
+/* =================================================== */
+// 要素をスライドしながら非表示にする関数(jQueryのslideUpと同じ)
+var slideUp = function slideUp(el) {
+  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
+  el.style.height = el.offsetHeight + "px";
+  el.offsetHeight;
+  el.style.transitionProperty = "height, margin, padding";
+  el.style.transitionDuration = duration + "ms";
+  el.style.transitionTimingFunction = "ease";
+  el.style.overflow = "hidden";
+  el.style.height = 0;
+  el.style.paddingTop = 0;
+  el.style.paddingBottom = 0;
+  el.style.marginTop = 0;
+  el.style.marginBottom = 0;
+  setTimeout(function () {
+    el.style.display = "none";
+    el.style.removeProperty("height");
+    el.style.removeProperty("padding-top");
+    el.style.removeProperty("padding-bottom");
+    el.style.removeProperty("margin-top");
+    el.style.removeProperty("margin-bottom");
+    el.style.removeProperty("overflow");
+    el.style.removeProperty("transition-duration");
+    el.style.removeProperty("transition-property");
+    el.style.removeProperty("transition-timing-function");
+    el.classList.remove("is-open");
+  }, duration);
+}; // 要素をスライドしながら表示する関数(jQueryのslideDownと同じ)
+
+
+var slideDown = function slideDown(el) {
+  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
+  el.classList.add("is-open");
+  el.style.removeProperty("display");
+  var display = window.getComputedStyle(el).display;
+
+  if (display === "none") {
+    display = "block";
+  }
+
+  el.style.display = display;
+  var height = el.offsetHeight;
+  el.style.overflow = "hidden";
+  el.style.height = 0;
+  el.style.paddingTop = 0;
+  el.style.paddingBottom = 0;
+  el.style.marginTop = 0;
+  el.style.marginBottom = 0;
+  el.offsetHeight;
+  el.style.transitionProperty = "height, margin, padding";
+  el.style.transitionDuration = duration + "ms";
+  el.style.transitionTimingFunction = "ease";
+  el.style.height = height + "px";
+  el.style.removeProperty("padding-top");
+  el.style.removeProperty("padding-bottom");
+  el.style.removeProperty("margin-top");
+  el.style.removeProperty("margin-bottom");
+  setTimeout(function () {
+    el.style.removeProperty("height");
+    el.style.removeProperty("overflow");
+    el.style.removeProperty("transition-duration");
+    el.style.removeProperty("transition-property");
+    el.style.removeProperty("transition-timing-function");
+  }, duration);
+}; // 要素をスライドしながら交互に表示/非表示にする関数(jQueryのslideToggleと同じ)
+
+
+var slideToggle = function slideToggle(el) {
+  var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
+
+  if (window.getComputedStyle(el).display === "none") {
+    return slideDown(el, duration);
+  } else {
+    return slideUp(el, duration);
+  }
+};
+/* =================================================== */
+// DOM操作
+
+/* =================================================== */
+// アコーディオンを全て取得
+
+
+var accordions = document.querySelectorAll(".js-accordion"); // 取得したアコーディオンをArrayに変換(IE対策)
+
+var accordionsArr = Array.prototype.slice.call(accordions);
+accordionsArr.forEach(function (accordion) {
+  // Triggerを全て取得
+  var accordionTriggers = accordion.querySelectorAll(".js-accordion-trigger"); // TriggerをArrayに変換(IE対策)
+
+  var accordionTriggersArr = Array.prototype.slice.call(accordionTriggers);
+  accordionTriggersArr.forEach(function (trigger) {
+    // Triggerにクリックイベントを付与
+    trigger.addEventListener("click", function () {
+      // '.is-active'クラスを付与or削除
+      trigger.classList.toggle("is-active"); // 開閉させる要素を取得
+
+      var content = trigger.querySelector(".accordion__content"); // 要素を展開or閉じる
+
+      slideToggle(content);
+    });
+  });
+});
