@@ -1,5 +1,5 @@
-@media screen and (min-width: 768px) {
-}
+@use "sass:math";
 
-// @media screen and (min-width: 768px) and (max-width: 999px) {
-// }
+@media screen and (min-width: 768px) {
+  $width: 1600px;
+}
