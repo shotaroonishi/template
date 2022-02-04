@@ -1,0 +1,65 @@
+@use "sass:math";
+/* アコーディオン全体 */
+
+/* アコーディオン */
+.accordion__item {
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* アコーディオンのタイトル */
+.accordion__title {
+  position: relative;
+  padding: 15px 60px 15px 20px;
+  font-weight: 500;
+  font-size: 1.6rem;
+
+  cursor: pointer;
+  color: #fff;
+  border-top: solid 1px #fff;
+}
+
+/* (+)アイコン */
+.accordion__title::before,
+.accordion__title::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  background-color: #fff;
+  width: 20px;
+  height: 4px;
+  transition: all 0.3s;
+}
+
+.accordion__title::after {
+  transform: rotate(90deg);
+}
+
+/* アコーディオンのコンテンツ */
+.accordion__content {
+  padding: 15px 20px 15px 20px;
+  display: none;
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+
+.accordion__content.is-open {
+  display: block;
+}
+
+/* アコーディオン展開時の(-)アイコン */
+.accordion__item.is-active .accordion__title::before {
+  transform: rotate(180deg);
+}
+
+.accordion__item.is-active .accordion__title::after {
+  transform: rotate(180deg);
+  opacity: 0;
+}
