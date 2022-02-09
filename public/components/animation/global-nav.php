@@ -1,1 +1,0 @@
-<div class="openbtn-wrap pc-none"><div class="openbtn" id="js-btn"><span> </span><span> </span><span> </span></div></div><nav class="pc-none" id="g-nav"> <div id="g-nav-list"><ul> <li> <a href="" target="">テキスト</a></li><li> <a href="" target="">テキスト</a></li><li> <a href="" target="">テキスト</a></li></ul></div></nav>
