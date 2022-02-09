@@ -1,0 +1,15 @@
+@charset "utf-8";
+@use "sass:math";
+
+// 設定用
+@use "src/scss/foundation/reset";
+@use "src/scss/foundation/base";
+@use "src/scss/foundation/mixin";
+@use "src/scss/foundation/setting";
+@use "src/scss/layout/footer";
+@use "src/scss/layout/header";
+@use "src/scss/object/component/button";
+@use "src/scss/object/component/list";
+@use "src/scss/object/project/top";
+@use "src/scss/object/project/news";
+@use "src/scss/object/animation/global-nav";

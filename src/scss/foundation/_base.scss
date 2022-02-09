@@ -1,21 +1,3 @@
-$main-color: #000;
-$sub-color: #ccc;
-
-.flx {
-  display: flex;
-}
-.flx-btw {
-  justify-content: space-between;
-}
-.flx-center {
-  justify-content: center;
-}
-.flx-wrap {
-  flex-wrap: wrap;
-}
-.al-center {
-  align-items: center;
-}
 a {
   cursor: pointer;
   transition: 0.3s;
@@ -23,20 +5,7 @@ a {
     opacity: 0, 8;
   }
 }
-.btn {
-  display: block;
-  box-sizing: border-box;
-}
-@media screen and (min-width: 768px) {
-  .pc-none {
-    display: none;
-  }
-}
-@media screen and (max-width: 767px) {
-  .sp-none {
-    display: none;
-  }
-}
+
 .video iframe {
   width: 100%;
   height: 100%;
@@ -62,12 +31,10 @@ a {
   width: 100%;
   // padding-top: 500px;
 }
+
 html {
   font-size: 62.5%;
 }
 body {
   font-size: 1.6rem;
-}
-em {
-  font-style: normal;
 }

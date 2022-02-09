@@ -1,0 +1,31 @@
+@use "sass:math";
+$main-color: #000;
+$sub-color: #ccc;
+.flx {
+  display: flex;
+}
+.flx-btw {
+  justify-content: space-between;
+}
+.flx-center {
+  justify-content: center;
+}
+.flx-wrap {
+  flex-wrap: wrap;
+}
+.al-center {
+  align-items: center;
+}
+
+.btn {
+  display: block;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+  $width: 1600px;
+}
+
+@media screen and (max-width: 767px) {
+  $width: 480px;
+}

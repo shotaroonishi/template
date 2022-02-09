@@ -1,10 +1,13 @@
 doctype html
 html(lang='ja')
   head
-    include components/head.pug
+    include layout/head.pug
   body#js-drawer 
     include components/animation/global-nav.pug
-    include components/header.pug
+    include layout/header.pug
     main.main__wrap
-    include components/footer.pug
-    include components/script-list.pug
+      picture 
+        source(media="(min-width: 768px)", srcset="")
+        source(media="(max-width: 767px)", srcset="")
+    include layout/footer.pug
+    include layout/script-list.pug
