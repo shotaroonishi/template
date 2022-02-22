@@ -3,6 +3,11 @@
 
 // 設定用
 @use "src/scss/foundation/reset";
+//remodal
+// @use "src/scss/object/animation/remodal-default-theme";
+// @use "src/scss/object/animation/remodal";
+//slick
+// @use "src/scss/object/animation/slick-theme";
 @use "src/scss/foundation/base";
 @use "src/scss/foundation/mixin";
 @use "src/scss/foundation/setting";
@@ -11,5 +16,4 @@
 @use "src/scss/object/component/button";
 @use "src/scss/object/component/list";
 @use "src/scss/object/project/top";
-@use "src/scss/object/project/news";
 @use "src/scss/object/animation/global-nav";
