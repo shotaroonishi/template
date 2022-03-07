@@ -39,11 +39,17 @@ html {
 }
 body {
   font-size: 1.6rem;
+  font-family: "Noto Sans JP", "ヒラギノ角ゴ Pro", "游ゴシック体", "Yu Gothic",
+    YuGothic, "MS Pゴシック", "MS PGothic", "Hiragino Kaku Gothic Pro",
+    "メイリオ", Meiryo, "MS Pゴシック", "MS PGothic", sans-serif;
 }
 
 @media screen and (min-width: 768px) {
   .pc-none {
     display: none;
+  }
+  a[href^="tel:"] {
+    pointer-events: none;
   }
 }
 @media screen and (max-width: 767px) {
