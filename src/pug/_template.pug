@@ -1,0 +1,11 @@
+include _data/_meta.pug
+block page
+doctype html
+html(lang='ja')
+  include _layout/_head.pug
+  body#js-drawer 
+    include _components/_animation/_global-nav.pug
+    include _layout/_header.pug
+    block pageContent
+    include _layout/_footer.pug
+    include _layout/_script-list.pug
