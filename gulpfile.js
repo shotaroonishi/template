@@ -65,23 +65,25 @@ task("pug", function () {
       },
     },
   };
-  return src([paths.pug, "!./src/pug/**/_*.pug"])
-    .pipe(
-      plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
-    )
-    .pipe(
-      pug(options, {
-        pretty: true,
-        basedir: "./src/pug",
-        options: true,
-      })
-    )
-    .pipe(
-      rename({
-        extname: ".php",
-      })
-    )
-    .pipe(dest(paths.php));
+  return (
+    src([paths.pug, "!./src/pug/**/_*.pug"])
+      .pipe(
+        plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
+      )
+      .pipe(
+        pug(options, {
+          pretty: true,
+          basedir: "./src/pug",
+          options: true,
+        })
+      )
+      // .pipe(
+      //   rename({
+      //     extname: ".php",
+      //   })
+      // )
+      .pipe(dest(paths.php))
+  );
 });
 
 //JS Compress
@@ -92,7 +94,7 @@ task("js", function () {
         presets: ["@babel/preset-env"],
       })
     )
-    .pipe(uglify()) 
+    .pipe(uglify())
     .pipe(dest(paths.jsDist));
 });
 

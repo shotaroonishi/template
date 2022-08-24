@@ -1,22 +1,33 @@
 @use "sass:math";
 
-$viewport-mb: 1400;
-$viewport-sp: 812;
-// $viewport-sp: 767;
+$viewport-mb: 1200px;
+$viewport-sp: 767px;
 
-$breakpoint-up: (
-  // "pc": "screen and (min-width: 1401px)",
-  "mb": "screen and (max-width: 1400px)",
-  "sp": "screen and (max-width: 812px)"
-) !default;
-
-//mixinを定義（初期値はmd）
-@mixin mq-up($breakpoint: md) {
-  @media #{map-get($breakpoint-up, $breakpoint)} {
+@mixin sp {
+  @media screen and (max-width: $viewport-sp) {
     @content;
   }
 }
-// size
-@function size($px, $viewport) {
-  @return (math.div(100vw, $viewport) * $px);
+
+@mixin mb {
+  @media screen and (min-width: $viewport-sp) and (max-width: $viewport-mb) {
+    @content;
+  }
 }
+
+// $breakpoint-up: (
+//   // "pc": "screen and (min-width: 1401px)",
+//   "mb": "screen and (max-width: 1400px)",
+//   "sp": "screen and (max-width: 812px)"
+// ) !default;
+
+//mixinを定義（初期値はmd）
+// @mixin mq-up($breakpoint: md) {
+//   @media #{map-get($breakpoint-up, $breakpoint)} {
+//     @content;
+//   }
+// }
+// // size
+// @function size($px, $viewport) {
+//   @return (math.div(100vw, $viewport) * $px);
+// }
