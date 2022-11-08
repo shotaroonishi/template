@@ -17,8 +17,34 @@ $sub-color: #ccc;
 .al-center {
   align-items: center;
 }
-
+.main-color {
+  $main-color: #000;
+}
+.sub-color {
+  $sub-color: #ccc;
+}
 .btn {
   display: block;
   box-sizing: border-box;
+}
+.fit-img {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.fit-img img {
+  position: absolute;
+  top: 50% !important;
+  left: 50% !important;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  font-family: "object-fit: cover; object-position: bottom";
+  -o-object-position: bottom;
+  object-position: bottom;
+  min-height: 100%;
+  min-width: 100%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
 }

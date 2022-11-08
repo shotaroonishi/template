@@ -36,23 +36,26 @@ const { watch, series, task, src, dest, parallel } = require("gulp");
 
 //Sass
 task("sass", function () {
-  return src(paths.cssSrc)
-    .pipe(
-      plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
-    )
-    .pipe(
-      sass({
-        outputStyle: "expanded", // Minifyするなら'compressed'
-      })
-    )
-    .pipe(autoprefixer())
-    .pipe(cleanCSS())
-    .pipe(
-      rename({
-        extname: ".min.css",
-      })
-    )
-    .pipe(dest(paths.cssDist));
+  return (
+    src(paths.cssSrc)
+      .pipe(
+        plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
+      )
+      .pipe(
+        sass({
+          outputStyle: "expanded", // Minifyするなら'compressed'
+        })
+      )
+      .pipe(autoprefixer())
+      // 圧縮させたい時
+      // .pipe(cleanCSS())
+      .pipe(
+        rename({
+          extname: ".min.css",
+        })
+      )
+      .pipe(dest(paths.cssDist))
+  );
 });
 
 //Pug
@@ -71,12 +74,18 @@ task("pug", function () {
         plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
       )
       .pipe(
+        // pug({
+        //   pretty: true,
+        //   basedir: "./src/pug",
+        // })
+        //圧縮したい時
         pug(options, {
           pretty: true,
           basedir: "./src/pug",
           options: true,
         })
       )
+      //phpにしたい時
       // .pipe(
       //   rename({
       //     extname: ".php",

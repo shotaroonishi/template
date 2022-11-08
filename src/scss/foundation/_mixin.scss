@@ -1,6 +1,6 @@
 @use "sass:math";
 
-$viewport-mb: 1200px;
+$viewport-mb: 1279px;
 $viewport-sp: 767px;
 
 @mixin sp {
@@ -10,11 +10,10 @@ $viewport-sp: 767px;
 }
 
 @mixin mb {
-  @media screen and (min-width: $viewport-sp) and (max-width: $viewport-mb) {
+  @media screen and (min-width: 768px) and (max-width: $viewport-mb) {
     @content;
   }
 }
-
 // $breakpoint-up: (
 //   // "pc": "screen and (min-width: 1401px)",
 //   "mb": "screen and (max-width: 1400px)",
