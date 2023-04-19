@@ -6,20 +6,14 @@ const pug = require("gulp-pug");
 const rename = require("gulp-rename");
 const autoprefixer = require("gulp-autoprefixer");
 const uglify = require("gulp-uglify");
-const browserSync = require("browser-sync");
-//画像圧縮
+const browserSync = require("browser-sync").create();
 const imagemin = require("gulp-imagemin");
 const mozjpeg = require("imagemin-mozjpeg");
 const pngquant = require("imagemin-pngquant");
 const changed = require("gulp-changed");
-
-//js
 const babel = require("gulp-babel");
-
-//css
 const cleanCSS = require("gulp-clean-css");
 
-//setting : paths
 const paths = {
   root: "./public/",
   pug: "./src/pug/**/*.pug",
@@ -31,35 +25,24 @@ const paths = {
   jsDist: "./public/js/",
 };
 
-//gulpコマンドの省略
-const { watch, series, task, src, dest, parallel } = require("gulp");
-
-//Sass
-task("sass", function () {
+const compileSass = () => {
   return (
-    src(paths.cssSrc)
+    gulp
+      .src(paths.cssSrc)
       .pipe(
         plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
       )
-      .pipe(
-        sass({
-          outputStyle: "expanded", // Minifyするなら'compressed'
-        })
-      )
+      .pipe(sass({ outputStyle: "expanded" }))
       .pipe(autoprefixer())
-      // 圧縮させたい時
       // .pipe(cleanCSS())
-      .pipe(
-        rename({
-          extname: ".min.css",
-        })
-      )
-      .pipe(dest(paths.cssDist))
+      .pipe(rename({ suffix: ".min" }))
+      .pipe(gulp.dest(paths.cssDist))
+      .pipe(browserSync.stream())
   );
-});
+};
+exports.compileSass = compileSass;
 
-//Pug
-task("pug", function () {
+const compilePug = () => {
   const options = {
     filters: {
       php: (text) => {
@@ -68,48 +51,40 @@ task("pug", function () {
       },
     },
   };
-  return (
-    src([paths.pug, "!./src/pug/**/_*.pug"])
-      .pipe(
-        plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
-      )
-      .pipe(
-        // pug({
-        //   pretty: true,
-        //   basedir: "./src/pug",
-        // })
-        //圧縮したい時
-        pug(options, {
-          pretty: true,
-          basedir: "./src/pug",
-          options: true,
-        })
-      )
-      //phpにしたい時
-      // .pipe(
-      //   rename({
-      //     extname: ".php",
-      //   })
-      // )
-      .pipe(dest(paths.php))
-  );
-});
-
-//JS Compress
-task("js", function () {
-  return src(paths.jsSrc)
+  return gulp
+    .src([paths.pug, "!./src/pug/**/_*.pug"])
     .pipe(
-      babel({
-        presets: ["@babel/preset-env"],
-      })
+      plumber({ errorHandler: notify.onError("Error: <%= error.message %>") })
     )
-    .pipe(uglify())
-    .pipe(dest(paths.jsDist));
-});
+    .pipe(
+      pug({
+        pretty: true,
+        basedir: "./src/pug",
+      })
+      // 圧縮する場合は以下のように追記します。
+      // pug(options, {
+      //   pretty: true,
+      //   basedir: "./src/pug",
+      //   options: true,
+      // })
+    )
+    .pipe(gulp.dest(paths.php))
+    .pipe(browserSync.stream());
+};
+exports.compilePug = compilePug;
 
-//画像圧縮
-gulp.task("img", function (done) {
-  gulp
+const compileJs = () => {
+  return gulp
+    .src(paths.jsSrc)
+    .pipe(babel({ presets: ["@babel/preset-env"] }))
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.jsDist))
+    .pipe(browserSync.stream());
+};
+exports.compileJs = compileJs;
+
+const imageMin = () => {
+  return gulp
     .src("src/img/*.{jpg,jpeg,png,gif,svg}")
     .pipe(changed("./public/img/"))
     .pipe(
@@ -124,33 +99,32 @@ gulp.task("img", function (done) {
         imagemin.gifsicle({ optimizationLevel: 3 }), // 圧縮率
       ])
     )
-    .pipe(gulp.dest("./public/img/"));
-  done();
-});
+    .pipe(gulp.dest("./public/img/"))
+    .pipe(browserSync.stream());
+};
+exports.imageMin = imageMin;
 
-// browser-sync
-task("browser-sync", () => {
-  return browserSync.init({
+const serve = () => {
+  browserSync.init({
     server: {
       baseDir: paths.root,
     },
     port: 8080,
     reloadOnRestart: true,
   });
-});
+};
+exports.serve = serve;
 
-// browser-sync reload
-task("reload", (done) => {
-  browserSync.reload();
-  done();
-});
+const watchFiles = () => {
+  gulp.watch(paths.cssSrc, compileSass);
+  gulp.watch(paths.pug, compilePug);
+  gulp.watch(paths.jsSrc, compileJs);
+  gulp.watch(paths.img, imageMin);
+  gulp.watch("*.{html,php}").on("change", browserSync.reload);
+};
+exports.watchFiles = watchFiles;
 
-//watch
-task("watch", (done) => {
-  watch([paths.cssSrc], series("sass", "reload"));
-  watch([paths.jsSrc], series("js", "reload"));
-  watch([paths.pug], series("pug", "reload"));
-  watch([paths.img], series("img", "reload"));
-  done();
-});
-task("default", parallel("watch", "browser-sync"));
+exports.default = gulp.series(
+  gulp.parallel(compileSass, compilePug, compileJs, imageMin),
+  gulp.parallel(watchFiles, serve)
+);
